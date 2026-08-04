@@ -43,17 +43,28 @@ export interface DoctorDeps {
 const RENDER_BUDGET_MS = 200;
 
 async function checkClaudeCode(): Promise<Check> {
+  // On Windows the npm-installed `claude` is a `.cmd` batch shim, which cannot be
+  // launched without a shell. Enabling one is safe here and only here: the
+  // command and its single argument are both compile-time constants, so there is
+  // no user-controlled text anywhere near the shell.
+  const onWindows = process.platform === 'win32';
+
   try {
-    const { stdout } = await execFileAsync('claude', ['--version'], { windowsHide: true });
+    const { stdout } = await execFileAsync('claude', ['--version'], {
+      windowsHide: true,
+      shell: onWindows,
+    });
     return { name: 'Claude Code', status: 'pass', detail: stdout.trim() };
   } catch {
-    return {
-      name: 'Claude Code',
-      status: 'warn',
-      detail: 'not found on PATH',
-      remedy: 'The tower still works, but nothing will run it. Install Claude Code first.',
-    };
+    // Fall through to the warning below.
   }
+
+  return {
+    name: 'Claude Code',
+    status: 'warn',
+    detail: 'not found on PATH',
+    remedy: 'The tower still works, but nothing will run it. Install Claude Code first.',
+  };
 }
 
 async function checkStatusLineWired(home: string): Promise<Check> {

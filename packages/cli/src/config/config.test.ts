@@ -51,7 +51,9 @@ describe('parseConfig', () => {
   });
 
   it('filters non-strings out of string arrays', () => {
-    expect(parseConfig({ disabledSegments: ['cost', 42, null] }).disabledSegments).toEqual(['cost']);
+    expect(parseConfig({ disabledSegments: ['cost', 42, null] }).disabledSegments).toEqual([
+      'cost',
+    ]);
   });
 
   it('merges partial thresholds over the defaults', () => {

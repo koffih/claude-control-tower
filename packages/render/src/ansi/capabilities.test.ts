@@ -11,7 +11,9 @@ describe('colour detection', () => {
   });
 
   it('ignores an empty NO_COLOR, per the specification', () => {
-    expect(detectCapabilities({ NO_COLOR: '', COLORTERM: 'truecolor' }).colorDepth).toBe('truecolor');
+    expect(detectCapabilities({ NO_COLOR: '', COLORTERM: 'truecolor' }).colorDepth).toBe(
+      'truecolor',
+    );
   });
 
   it.each([

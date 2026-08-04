@@ -128,7 +128,6 @@ describe('terminal degradation', () => {
     const { text } = await render('critical', { ...wideTerminal, CCT_GLYPHS: 'ascii' });
     const plain = stripAnsi(text);
 
-    // eslint-disable-next-line no-control-regex
     expect(plain).toMatch(/^[\x20-\x7e\n]*$/);
     expect(plain).toContain('96%');
   });

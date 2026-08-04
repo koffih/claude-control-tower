@@ -33,8 +33,20 @@ function assistantLine(options: {
 describe('parseTranscript', () => {
   it('sums token usage across the window', () => {
     const text = [
-      assistantLine({ at: '2026-01-15T12:00:00Z', input: 10, output: 20, cacheRead: 30, cacheCreation: 40 }),
-      assistantLine({ at: '2026-01-15T12:05:00Z', input: 1, output: 2, cacheRead: 3, cacheCreation: 4 }),
+      assistantLine({
+        at: '2026-01-15T12:00:00Z',
+        input: 10,
+        output: 20,
+        cacheRead: 30,
+        cacheCreation: 40,
+      }),
+      assistantLine({
+        at: '2026-01-15T12:05:00Z',
+        input: 1,
+        output: 2,
+        cacheRead: 3,
+        cacheCreation: 4,
+      }),
     ].join('\n');
 
     const state = parseTranscript(text);

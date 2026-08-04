@@ -107,7 +107,11 @@ async function runStatus(cwd: string): Promise<string | null> {
     const { stdout } = await execFileAsync(
       'git',
       [
-        // Never let a user's global config slow this down or prompt for anything.
+        // Both of these are git-level options and MUST precede the subcommand.
+        // Passing `--no-optional-locks` after `status` makes git reject the whole
+        // invocation, which the fallback then quietly turns into "no repository" —
+        // a silent wrong answer rather than a visible error.
+        '--no-optional-locks',
         '-c',
         'core.fsmonitor=false',
         'status',
@@ -116,7 +120,6 @@ async function runStatus(cwd: string): Promise<string | null> {
         // Untracked files in a large tree are the slowest part of `git status`.
         // `normal` counts a directory once rather than walking into it.
         '--untracked-files=normal',
-        '--no-optional-locks',
       ],
       { cwd, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 },
     );

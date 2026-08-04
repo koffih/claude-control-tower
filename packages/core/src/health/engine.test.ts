@@ -156,7 +156,9 @@ describe('ordering and precedence', () => {
     });
 
     const severities = evaluateHealth(snapshot).findings.map((finding) => finding.severity);
-    expect(severities).toEqual([...severities].sort((a, b) => (a === b ? 0 : a === 'critical' ? -1 : 1)));
+    expect(severities).toEqual(
+      [...severities].sort((a, b) => (a === b ? 0 : a === 'critical' ? -1 : 1)),
+    );
     expect(primaryAdvice(evaluateHealth(snapshot))?.severity).toBe('critical');
   });
 

@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { withBudget, withFallback } from './budget.js';
 
 const delay = <T>(millis: number, value: T): Promise<T> =>
-  new Promise((resolve) => setTimeout(() => { resolve(value); }, millis));
+  new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(value);
+    }, millis),
+  );
 
 /**
  * The budget primitives are what keep a slow repository from stopping the status
@@ -35,16 +39,14 @@ describe('withBudget', () => {
 
 describe('withFallback', () => {
   it('returns the value on success', async () => {
-    await expect(withFallback(async () => 'ok', 'fallback')).resolves.toBe('ok');
+    await expect(withFallback(() => Promise.resolve('ok'), 'fallback')).resolves.toBe('ok');
   });
 
   // Collectors touch the outside world, where a mid-rebase repo or a rotating
   // transcript can fail in ways that are not actionable at the render site.
   it('swallows any failure into the fallback', async () => {
     await expect(
-      withFallback(async () => {
-        throw new Error('permission denied');
-      }, 'fallback'),
+      withFallback(() => Promise.reject(new Error('permission denied')), 'fallback'),
     ).resolves.toBe('fallback');
   });
 

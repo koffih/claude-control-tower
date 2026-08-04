@@ -19,3 +19,4 @@ Thumbs.db
 npm-debug.log*
 .npm/
 .eslintcache
+packages/cli/README.md

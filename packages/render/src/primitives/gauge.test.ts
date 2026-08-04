@@ -8,9 +8,7 @@ import { renderGauge, severityForUsage } from './gauge.js';
 const styler = new Styler(PLAIN_CAPABILITIES);
 
 const gauge = (percentage: number, width = 10, glyphs: 'unicode' | 'ascii' = 'unicode'): string =>
-  stripAnsi(
-    renderGauge({ percentage, width, severity: 'ok', theme: TOWER_DARK, styler, glyphs }),
-  );
+  stripAnsi(renderGauge({ percentage, width, severity: 'ok', theme: TOWER_DARK, styler, glyphs }));
 
 describe('renderGauge', () => {
   // Fixed width is what stops the segments after it shifting as the value changes.

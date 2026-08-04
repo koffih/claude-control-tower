@@ -42,7 +42,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc --build && tsup"
+    "build": "tsc --build && tsup",
+    "prepack": "node -e \"require('node:fs').copyFileSync('../../README.md', 'README.md')\""
   },
   "devDependencies": {
     "@cct/collectors": "*",

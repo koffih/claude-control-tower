@@ -95,9 +95,7 @@ export function composeLine(segments: readonly RenderedSegment[], options: Compo
   // prompt around and corrupts the interface, which is worse than losing the tail
   // of one label. Truncation drops styling, which is an acceptable price at a
   // width this extreme.
-  return displayWidth(line) > options.maxWidth
-    ? truncateToWidth(line, options.maxWidth)
-    : line;
+  return displayWidth(line) > options.maxWidth ? truncateToWidth(line, options.maxWidth) : line;
 }
 
 /**
