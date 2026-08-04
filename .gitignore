@@ -26,3 +26,6 @@ packages/cli/README.md
 tmp/
 *.token
 .env.local
+
+# Local push helper. It reads a GitHub token, so it stays out of the repository.
+push.py
