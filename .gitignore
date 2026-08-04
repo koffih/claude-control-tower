@@ -20,3 +20,9 @@ npm-debug.log*
 .npm/
 .eslintcache
 packages/cli/README.md
+
+# Local scratch. Never committed: this is where credentials and notes get parked,
+# and a public repository is exactly the wrong place for either.
+tmp/
+*.token
+.env.local
