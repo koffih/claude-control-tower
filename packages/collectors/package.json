@@ -1,0 +1,25 @@
+{
+  "name": "@cct/collectors",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "I/O adapters for Claude Control Tower, each bounded by a strict time budget.",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@cct/core": "*"
+  }
+}

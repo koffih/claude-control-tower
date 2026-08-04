@@ -1,0 +1,46 @@
+{
+  "name": "claude-control-tower-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo for Claude Control Tower — the mission control cockpit for Claude Code.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "packageManager": "npm@11.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --build --force",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "bench": "node --experimental-strip-types packages/cli/bench/statusline.bench.ts",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test",
+    "clean": "node -e \"for (const p of ['packages/core','packages/render','packages/collectors','packages/plugin-sdk','packages/cli']) { require('node:fs').rmSync(p + '/dist', { recursive: true, force: true }); require('node:fs').rmSync(p + '/tsconfig.tsbuildinfo', { force: true }); }\""
+  },
+  "overridesRationale": {
+    "esbuild": "<=0.28.0 carries two dev-server advisories (GHSA-67mh-4wv8-2f99, GHSA-g7r4-m6w7-qqqr). We never run its dev server, but a public repo should audit clean, so tsup and vite are pinned forward to the patched line."
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^4.1.10"
+  }
+}

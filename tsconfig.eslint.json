@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // Linting needs type information for every file in the repo, including tests,
+    // build configs and the bin shim — none of which belong in a build graph.
+    // `composite: false` lets this config see them all without emitting anything.
+    "composite": false,
+    "incremental": false,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/bin/**/*.js",
+    "packages/*/*.config.ts",
+    "*.config.ts",
+    "*.config.js"
+  ]
+}

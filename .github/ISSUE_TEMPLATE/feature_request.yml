@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest something the tower should show, say, or do
+labels: [enhancement, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The tower has a hard constraint that shapes every feature: it must render
+        inside Claude Code's 300ms debounce, and it has one line of the user's
+        attention. That makes "what would you drop to make room for this" a real
+        question rather than a rhetorical one.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve
+      description: Describe the situation you are in, not the feature you want.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like it to do
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of change is this
+      options:
+        - A new segment (something to display)
+        - A new health rule (something to advise)
+        - A change to an existing segment or rule
+        - Configuration or theming
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: tradeoff
+    attributes:
+      label: What it should displace
+      description: |
+        Which existing segment should give up its space on a narrow terminal, or
+        why this belongs at a lower priority than what is already there?
+    validations:
+      required: false

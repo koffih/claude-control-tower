@@ -1,0 +1,57 @@
+{
+  "name": "claude-control-tower",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Mission control for Claude Code \u2014 a status line that tells you what to do, not just what happened.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "statusline",
+    "cli",
+    "terminal",
+    "developer-tools",
+    "productivity"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/OWNER/claude-control-tower#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/claude-control-tower.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/OWNER/claude-control-tower/issues"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "bin": {
+    "cct": "./bin/cct.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --build && tsup"
+  },
+  "devDependencies": {
+    "@cct/collectors": "*",
+    "@cct/core": "*",
+    "@cct/plugin-sdk": "*",
+    "@cct/plugins-builtin": "*",
+    "@cct/render": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

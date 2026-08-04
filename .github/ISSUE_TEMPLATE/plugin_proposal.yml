@@ -1,0 +1,47 @@
+name: Plugin proposal
+description: Propose a plugin — AWS, Docker, Kubernetes, CI, or anything else
+labels: [plugin, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Plugins are the intended way to extend the tower, and you do not need
+        permission to write one — see `docs/plugins.md`. Open this issue when you
+        want to discuss the design first, or propose that a plugin ship by default.
+
+  - type: input
+    id: name
+    attributes:
+      label: Plugin name
+      placeholder: docker, kubernetes, aws, ci…
+    validations:
+      required: true
+
+  - type: textarea
+    id: segments
+    attributes:
+      label: What it would display
+    validations:
+      required: true
+
+  - type: textarea
+    id: rules
+    attributes:
+      label: What it would advise
+      description: |
+        The one-line recommendations it would produce, and when. A plugin that
+        only displays numbers is welcome, but advice is what makes the tower
+        useful rather than decorative.
+    validations:
+      required: false
+
+  - type: textarea
+    id: cost
+    attributes:
+      label: Where the data comes from, and what it costs
+      description: |
+        Segments render synchronously and cannot perform I/O. Anything from
+        outside has to be collected under a time budget. Roughly how expensive is
+        it, and can it be cached?
+    validations:
+      required: true

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "files": [],
+  "references": [
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/render"
+    },
+    {
+      "path": "packages/collectors"
+    },
+    {
+      "path": "packages/plugin-sdk"
+    },
+    {
+      "path": "packages/plugins-builtin"
+    },
+    {
+      "path": "packages/cli"
+    }
+  ]
+}

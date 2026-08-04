@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Build and pack without publishing'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    # Requires a repository environment named `npm` holding NPM_TOKEN. Gating on
+    # an environment means a publish can require a human approval, which is worth
+    # having on the one action in this repo that cannot be undone.
+    environment: npm
+    permissions:
+      contents: write
+      # Lets npm record a verifiable link between the published tarball and the
+      # commit it was built from.
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: npm ci
+
+      # The tag is not trusted on its own: a green pipeline is a precondition for
+      # publishing, so the full verification runs again here.
+      - name: Verify
+        run: npm run verify
+
+      - name: Build
+        run: npm run build
+
+      - name: Check the tag matches the package version
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version=$(node -p "require('./packages/cli/package.json').version")
+          if [ "$tag" != "$version" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package version $version" >&2
+            exit 1
+          fi
+        if: github.event_name == 'push'
+
+      - name: Inspect the tarball
+        working-directory: packages/cli
+        run: npm pack --dry-run
+
+      - name: Publish
+        if: github.event_name == 'push'
+        working-directory: packages/cli
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create the GitHub release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
