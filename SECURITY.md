@@ -8,7 +8,7 @@ pre-1.0, that means the most recent `0.x` release.
 ## Reporting a vulnerability
 
 Please report privately through
-[GitHub Security Advisories](https://github.com/OWNER/claude-control-tower/security/advisories/new)
+[GitHub Security Advisories](https://github.com/koffih/claude-control-tower/security/advisories/new)
 rather than opening a public issue.
 
 Expect an acknowledgement within 72 hours and an assessment within a week. If a

@@ -13,14 +13,14 @@
     "productivity"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/OWNER/claude-control-tower#readme",
+  "homepage": "https://github.com/koffih/claude-control-tower#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/claude-control-tower.git",
+    "url": "git+https://github.com/koffih/claude-control-tower.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/OWNER/claude-control-tower/issues"
+    "url": "https://github.com/koffih/claude-control-tower/issues"
   },
   "engines": {
     "node": ">=20.10.0"

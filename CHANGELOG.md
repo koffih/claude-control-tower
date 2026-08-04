@@ -38,5 +38,5 @@ The first release.
 - Rate limit gauges, sourced from the `rate_limits` field Claude Code provides
   to Claude.ai subscribers.
 
-[Unreleased]: https://github.com/OWNER/claude-control-tower/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/OWNER/claude-control-tower/releases/tag/v0.1.0
+[Unreleased]: https://github.com/koffih/claude-control-tower/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/koffih/claude-control-tower/releases/tag/v0.1.0

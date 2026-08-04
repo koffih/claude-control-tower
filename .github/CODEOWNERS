@@ -1,13 +1,13 @@
 # Default owner for everything.
-* @OWNER
+* @koffih
 
 # The plugin SDK is the public contract with contributors: a change here breaks
 # other people's work, so it always gets a maintainer's eyes.
-/packages/plugin-sdk/ @OWNER
+/packages/plugin-sdk/ @koffih
 
 # The wire contract with Claude Code. Drifting from the documented payload is the
 # one bug class that silently breaks every user at once.
-/packages/core/src/contract/ @OWNER
+/packages/core/src/contract/ @koffih
 
 # Release and CI configuration.
-/.github/workflows/ @OWNER
+/.github/workflows/ @koffih

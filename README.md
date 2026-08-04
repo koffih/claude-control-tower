@@ -2,7 +2,7 @@
 
 **A status line for Claude Code that tells you what to do, not just what happened.**
 
-[![CI](https://github.com/OWNER/claude-control-tower/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/claude-control-tower/actions/workflows/ci.yml)
+[![CI](https://github.com/koffih/claude-control-tower/actions/workflows/ci.yml/badge.svg)](https://github.com/koffih/claude-control-tower/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/claude-control-tower.svg)](https://www.npmjs.com/package/claude-control-tower)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D20.10-brightgreen.svg)](package.json)

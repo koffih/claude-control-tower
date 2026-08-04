@@ -5,7 +5,7 @@ Contributions are welcome. This document is short on purpose.
 ## Getting set up
 
 ```bash
-git clone https://github.com/OWNER/claude-control-tower
+git clone https://github.com/koffih/claude-control-tower
 cd claude-control-tower
 npm install
 npm run verify
