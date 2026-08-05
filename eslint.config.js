@@ -80,9 +80,18 @@ export default defineConfig(
     },
   },
   {
-    // The bin shim is plain JS running under Node, so the Node globals it uses
-    // have to be declared; TypeScript files get them from @types/node instead.
+    /**
+     * The bin shim is plain JS running under Node, so the Node globals it uses
+     * have to be declared; TypeScript files get them from @types/node instead.
+     *
+     * Type-aware linting is switched off here on purpose. Its only import is
+     * `dist/cct.bundle.js`, a build artifact that does not exist on a fresh
+     * clone, so every type in the file would resolve to `any` and the rules
+     * would report noise rather than defects. The file is a twenty-line
+     * dispatcher; there is nothing for type-aware rules to find.
+     */
     files: ['**/bin/*.js'],
+    extends: [tseslint.configs.disableTypeChecked],
     languageOptions: {
       globals: { process: 'readonly', console: 'readonly' },
     },

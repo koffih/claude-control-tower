@@ -9,7 +9,29 @@
     "incremental": false,
     "noEmit": true,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+
+    /**
+     * Resolve `@cct/*` to source, not to `dist`.
+     *
+     * Without this, type-aware linting silently depends on a prior build: the
+     * workspace symlinks point at `dist/index.d.ts`, and on a clean checkout that
+     * file does not exist, so every cross-package type degrades to `any` and
+     * typescript-eslint reports hundreds of `no-unsafe-*` errors that have
+     * nothing to do with the code.
+     *
+     * That is exactly what happened on the first CI run, which lints before it
+     * builds. Pointing at source makes `npm run lint` correct from a fresh clone
+     * with no build step, which is the only way it can be trusted.
+     */
+    "baseUrl": ".",
+    "paths": {
+      "@cct/core": ["packages/core/src/index.ts"],
+      "@cct/render": ["packages/render/src/index.ts"],
+      "@cct/collectors": ["packages/collectors/src/index.ts"],
+      "@cct/plugin-sdk": ["packages/plugin-sdk/src/index.ts"],
+      "@cct/plugins-builtin": ["packages/plugins-builtin/src/index.ts"]
+    }
   },
   "include": [
     "packages/*/src/**/*.ts",
