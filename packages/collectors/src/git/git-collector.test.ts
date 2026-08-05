@@ -1,6 +1,24 @@
+import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { describe, expect, it } from 'vitest';
 import { collectGitStateUncached, findGitDir } from './git-collector.js';
+
+/**
+ * Whether HEAD points at a branch rather than straight at a commit.
+ *
+ * The release workflow checks out a tag, which leaves HEAD detached, and a
+ * detached HEAD has no branch to report. Asking git directly keeps the
+ * assertion below honest in both situations instead of encoding an assumption
+ * about how the tests happen to be checked out.
+ */
+function isOnBranch(): boolean {
+  try {
+    execFileSync('git', ['symbolic-ref', '--quiet', 'HEAD'], { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Integration tests against the real `git` binary in this repository.
@@ -21,9 +39,16 @@ describe('collectGitStateUncached', () => {
 
     expect(state).not.toBeNull();
     // The specific assertion that would have failed: a repository with commits
-    // must report a branch and a HEAD, not the empty fallback.
-    expect(state?.branch).not.toBeNull();
+    // must report a HEAD, not the empty fallback. This one holds however the
+    // checkout was made, which is what makes it the real regression guard.
     expect(state?.head).toMatch(/^[0-9a-f]{7}$/);
+    // A branch is only owed when there is one. Reporting null on a detached
+    // HEAD is deliberate and covered in parse-porcelain.test.ts.
+    if (isOnBranch()) {
+      expect(state?.branch).not.toBeNull();
+    } else {
+      expect(state?.branch).toBeNull();
+    }
   });
 
   it('reports counts as numbers rather than leaving them undefined', async () => {
