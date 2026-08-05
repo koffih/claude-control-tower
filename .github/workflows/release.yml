@@ -62,8 +62,31 @@ jobs:
         working-directory: packages/cli
         run: npm pack --dry-run
 
+      # A tag can legitimately name a version that is already on the registry:
+      # 0.1.0 was published by hand, before this workflow had credentials. npm
+      # treats republishing an existing version as a hard error, so without this
+      # check the pipeline would go red for a release that is in fact done.
+      - name: Check whether the version is already on npm
+        id: registry
+        working-directory: packages/cli
+        shell: bash
+        run: |
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          # A version that is absent and a registry that is unreachable both exit
+          # non-zero here, and both are answered the same way: attempt the
+          # publish. npm is the authority on what exists, and it fails loudly —
+          # which is what we want, rather than silently skipping a real release.
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "$name@$version is already on the registry; skipping the publish."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "$name@$version is not on the registry; publishing it."
+          fi
+
       - name: Publish
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.registry.outputs.published == 'false'
         working-directory: packages/cli
         run: npm publish --provenance --access public
         env:
